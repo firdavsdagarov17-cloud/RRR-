@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RRR FUND - Proyektor Ekrani</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .header h1 {
+            font-size: 2.2rem;
+            color: #38bdf8;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .header p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+        .main-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            flex: 1;
+        }
+        .leaderboard-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .pedestal {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 15px;
+            margin-bottom: 20px;
+            min-height: 220px;
+        }
+        .podium-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            border-radius: 16px 16px 8px 8px;
+            padding: 15px;
+            width: 30%;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .podium-1 {
+            background: linear-gradient(180deg, #eab308, #ca8a04);
+            color: #000;
+            height: 200px;
+            order: 2;
+        }
+        .podium-2 {
+            background: linear-gradient(180deg, #94a3b8, #64748b);
+            color: #fff;
+            height: 160px;
+            order: 1;
+        }
+        .podium-3 {
+            background: linear-gradient(180deg, #d97706, #b45309);
+            color: #fff;
+            height: 130px;
+            order: 3;
+        }
+        .podium-rank {
+            font-size: 2rem;
+            font-weight: 900;
+        }
+        .podium-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 5px 0;
+            word-break: break-word;
+        }
+        .podium-sales {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .sellers-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .sellers-table th {
+            text-align: left;
+            padding: 12px;
+            color: #38bdf8;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            font-size: 1rem;
+        }
+        .sellers-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 1.05rem;
+        }
+        .feed-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-title {
+            font-size: 1.3rem;
+            color: #4ade80;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .feed-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .feed-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 4px solid #22c55e;
+            padding: 12px 15px;
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+        .feed-item-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 1rem;
+            color: #f8fafc;
+        }
+        .feed-item-details {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+        .badge-amount {
+            color: #4ade80;
+            font-weight: bold;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 900px) {
+            .main-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🏆 RRR FUND - SOTUVCHILAR REYTINGI 🏆</h1>
+        <p>Jonli sotuvlar va xodimlarning natijalari ekrani</p>
+    </div>
+
+    <div class="main-container">
+        <!-- Reyting va Shohsupa -->
+        <div class="leaderboard-card">
+            <div class="pedestal" id="pedestalContainer">
+                <div class="podium-box podium-2">
+                    <div class="podium-rank">🥈 2</div>
+                    <div class="podium-name" id="p2-name">-</div>
+                    <div class="podium-sales" id="p2-sales">0 UZS</div>
+                </div>
+                <div class="podium-box podium-1">
+                    <div class="podium-rank">🥇 1</div>
+                    <div class="podium-name" id="p1-name">-</div>
+                    <div class="podium-sales" id="p1-sales">0 UZS</div>
+                </div>
+                <div class="podium-box podium-3">
+                    <div class="podium-rank">🥉 3</div>
+                    <div class="podium-name" id="p3-name">-</div>
+                    <div class="podium-sales" id="p3-sales">0 UZS</div>
+                </div>
+            </div>
+
+            <table class="sellers-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Xodim</th>
+                        <th>Sotuvlar</th>
+                        <th>Umumiy Tushum</th>
+                        <th>Sprint</th>
+                    </tr>
+                </thead>
+                <tbody id="sellersTableBody">
+                    <tr><td colspan="5" style="text-align: center; color: #94a3b8;">Yuklanmoqda...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Oxirgi Tasdiqlangan Sotuvlar Lenta -->
+        <div class="feed-card">
+            <div class="feed-title">
+                <span>⚡ Oxirgi Tasdiqlangan Sotuvlar</span>
+            </div>
+            <ul class="feed-list" id="recentSalesFeed">
+                <li style="text-align: center; color: #94a3b8; padding: 20px;">Hozircha sotuvlar yo'q</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Global ravishda updateProjector funksiyasini e'lon qilamiz
+        window.updateProjector = function() {
+            if (typeof window.getDB !== 'function') return;
+            const dbData = window.getDB();
+            if (!dbData || !dbData.sellers) return;
+
+            const formatUZS = window.formatUZS || function(amt) { return new Intl.NumberFormat('uz-UZ').format(Math.round(amt || 0)) + ' UZS'; };
+
+            // 1. Sellers ma'lumotlarini massivga o'tkazish
+            const sellersArray = [];
+            for (const [name, data] of Object.entries(dbData.sellers)) {
+                sellersArray.push({
+                    name: name,
+                    sales: data.sales || 0,
+                    revenue: data.revenue || 0,
+                    sprint: data.sprint || 0,
+                    conversion: data.conversion || 0
+                });
+            }
+
+            // Tushum bo'yicha kamayish tartibida saralash
+            sellersArray.sort((a, b) => b.revenue - a.revenue || b.sales - a.sales);
+
+            // 2. Shohsuvani to'ldirish
+            if (sellersArray[0]) {
+                document.getElementById('p1-name').innerText = sellersArray[0].name;
+                document.getElementById('p1-sales').innerText = formatUZS(sellersArray[0].revenue) + ` (${sellersArray[0].sales} ta)`;
+            } else {
+                document.getElementById('p1-name').innerText = "-";
+                document.getElementById('p1-sales').innerText = "0 UZS";
+            }
+
+            if (sellersArray[1]) {
+                document.getElementById('p2-name').innerText = sellersArray[1].name;
+                document.getElementById('p2-sales').innerText = formatUZS(sellersArray[1].revenue) + ` (${sellersArray[1].sales} ta)`;
+            } else {
+                document.getElementById('p2-name').innerText = "-";
+                document.getElementById('p2-sales').innerText = "0 UZS";
+            }
+
+            if (sellersArray[2]) {
+                document.getElementById('p3-name').innerText = sellersArray[2].name;
+                document.getElementById('p3-sales').innerText = formatUZS(sellersArray[2].revenue) + ` (${sellersArray[2].sales} ta)`;
+            } else {
+                document.getElementById('p3-name').innerText = "-";
+                document.getElementById('p3-sales').innerText = "0 UZS";
+            }
+
+            // 3. Barcha xodimlar jadvalini to'ldirish
+            const tbody = document.getElementById('sellersTableBody');
+            tbody.innerHTML = '';
+            
+            sellersArray.forEach((s, idx) => {
+                let badge = idx === 0 ? "🥇" : (idx === 1 ? "🥈" : (idx === 2 ? "🥉" : (idx + 1)));
+                tbody.insertAdjacentHTML('beforeend', `
+                    <tr>
+                        <td style="font-weight: bold; color: #e2e8f0;">${badge}</td>
+                        <td style="font-weight: 600; color: #f8fafc;">👤 ${s.name}</td>
+                        <td style="color: #4ade80; font-weight: bold;">${s.sales} ta</td>
+                        <td style="font-weight: bold; color: #38bdf8;">${formatUZS(s.revenue)}</td>
+                        <td>🔥 ${s.sprint} / 6</td>
+                    </tr>
+                `);
+            });
+
+            // 4. Oxirgi tasdiqlangan sotuvlar lentasini chiqarish
+            const feedList = document.getElementById('recentSalesFeed');
+            const requests = dbData.requests || [];
+            const approvedRequests = requests.filter(r => r.status === 'approved');
+
+            if (approvedRequests.length > 0) {
+                feedList.innerHTML = '';
+                approvedRequests.slice().reverse().slice(0, 10).forEach(req => {
+                    let courseName = req.course === 'offline_buxoro' ? "Oflayn (Buxoro)" : (req.course === 'offline_toshkent' ? "Oflayn (Toshkent)" : "Onlayn");
+                    feedList.insertAdjacentHTML('beforeend', `
+                        <li class="feed-item">
+                            <div class="feed-item-header">
+                                <span>👤 ${req.seller}</span>
+                                <span class="badge-amount">+${formatUZS(req.amount)}</span>
+                            </div>
+                            <div class="feed-item-details">
+                                Mijoz: <b>${req.client}</b> | Kurs: ${courseName}
+                            </div>
+                        </li>
+                    `);
+                });
+            } else {
+                feedList.innerHTML = `<li style="text-align: center; color: #94a3b8; padding: 20px;">Hozircha tasdiqlangan sotuvlar yo'q</li>`;
+            }
+        };
+
+        // Zaxira uchun avtomatik har 1 soniyada yangilash
+        setInterval(function() {
+            if (typeof window.updateProjector === 'function') {
+                window.updateProjector();
+            }
+        }, 1000);
+    </script>
+
+    <!-- FIREBASE REALTIME DATABASE BILAN ISHLAYDIGAN SCRIPT -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
